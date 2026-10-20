@@ -1,3 +1,5 @@
+use std::error::Error;
+
 
 #[derive(Debug)]
 enum Car{
@@ -48,6 +50,22 @@ fn main() {
 
     let all= |x|x*2;
     println!("{}",all(6));
+
+    println!("{:?}",call_it(10));
+    let vl=call_it(10);
+    println!("{:?}",vl);
+
+
+    let bklo=blk_it(2);
+    println!("value is {:?}",bklo);
+
+    let bk=Books{
+        page:"23".to_string(),
+        price:32
+    };
+    bk.get_book();
+
+
     
    
     
@@ -61,5 +79,40 @@ fn call(s:String){
 }
 fn longest_stirng(words:&mut str){
     println!("{:?}",words.split_whitespace());
+    
+}
+fn call_it(i:i32)->Result<i32,Box<dyn Error>>{
+    let a:i32="40".parse()?;
+    println!("a :{}",a);
+    Ok(i*5)
+    
+}
+fn blk_it(i:i32)->Result<(),Box<dyn Error>>{
+    match i{
+        1 =>{println!("got the number");
+            Ok(())
+        },
+        5 =>{println!("got the greater one");
+            Ok(())
+        },
+        _ => {Err("number is not match".into())}
+    }
+
+   
+}
+
+trait Describe{
+    fn get_book(self);
+    
+}
+#[derive(Debug)]
+struct Books{
+    page:String,
+    price:i32
+}
+impl Describe for Books{
+    fn get_book(self) {
+        println!("show book {:?}",self)
+    }
     
 }
